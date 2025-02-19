@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template_string
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
@@ -17,6 +17,50 @@ genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # Initialize model
 model = genai.GenerativeModel(model_name="gemini-2.0-flash")
+
+# Página principal con información del proyecto
+@app.route('/', methods=['GET'])
+def home():
+    project_title = "Backend API for OCR with Gemini AI"
+    team_members = ["David Camilo Cortes Salazar"]
+    return render_template_string('''
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>{{ project_title }}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    text-align: center;
+                    padding: 20px;
+                    background-color: #f4f4f9;
+                    color: #333;
+                }
+                h1 {
+                    color: #007BFF;
+                }
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                }
+                li {
+                    margin: 5px 0;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>{{ project_title }}</h1>
+            <p>Welcome to the backend project. Here are the team members involved:</p>
+            <ul>
+                {% for member in team_members %}
+                    <li>{{ member }}</li>
+                {% endfor %}
+            </ul>
+        </body>
+        </html>
+    ''', project_title=project_title, team_members=team_members)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
