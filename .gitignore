@@ -1,0 +1,8 @@
+.env
+/img
+/myenv
+/excelenv
+/xlsx
+/json
+/node_modules
+/coverage
