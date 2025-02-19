@@ -96,6 +96,3 @@ def upload_file():
     df.to_excel(excel_path, index=False)
 
     return send_file(excel_path, as_attachment=True, download_name='table_data.xlsx')
-
-if __name__ == '__main__':
-    app.run(debug=True)
